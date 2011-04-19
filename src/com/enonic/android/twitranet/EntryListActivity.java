@@ -1,6 +1,10 @@
 package com.enonic.android.twitranet;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
+
+import org.jdom.JDOMException;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -8,10 +12,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
 
+import com.enonic.android.twitranet.login.LoginActivity;
+
 public class EntryListActivity
     extends ListActivity
 {
-    private static final int ACTIVITY_LOGIN=0;
+    private static final int ACTIVITY_LOGIN = 0;
 
     public final String CLASS = EntryListActivity.class.getSimpleName();
 
@@ -39,7 +45,7 @@ public class EntryListActivity
         listView.setAdapter( this.m_adapter );
         listView.setSmoothScrollbarEnabled( true );
 
-        Intent i = new Intent(this, LoginActivity.class);
+        Intent i = new Intent( this, LoginActivity.class );
         startActivityForResult( i, ACTIVITY_LOGIN );
 
 //        if ( DEBUG )
@@ -79,25 +85,6 @@ public class EntryListActivity
 //        }
 //        thread.start();
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapter, View view, int position, long arg3) {
-//                Object obj = (Object)m_adapter.getItem(position);
-//                if (obj != null) {
-//                    //TODO set this intent creation based on the unique parameter of the each CreateTestOption class
-//                    Intent intent = new Intent();
-//                    if (position == 2) {
-//                        intent.setClass(ViewCreateTestActivity.this, placeholderActivity2.class);
-//                    }else if (position == 1){
-//                        intent.setClass(ViewCreateTestActivity.this, placeholderActivity1.class);
-//                    }else if (position == 0 ) {
-//                        intent.setClass(ViewCreateTestActivity.this, placeholderActivity0.class);
-//                    }
-//                    startActivity(intent);
-//                }
-//            }
-//        });
-
     }
 
 //    private Runnable returnRes = new Runnable()
@@ -134,11 +121,31 @@ public class EntryListActivity
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
+    protected void onActivityResult( int requestCode, int resultCode, Intent intent )
+    {
+        if (requestCode == ACTIVITY_LOGIN) {
 
-        // TODO: fill in rest of method
-
+            super.onActivityResult( requestCode, resultCode, intent );
+            this.m_adapter.setUsername( intent.getExtras().getString( EntryArrayAdapter.KEY_USERNAME ) );
+            this.m_adapter.setPassword( intent.getExtras().getString( EntryArrayAdapter.KEY_PASSWORD ) );
+            try
+            {
+                this.m_adapter.refreshDataFromServer();
+                this.m_adapter.notifyDataSetChanged();
+            }
+            catch ( ParseException e )
+            {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            catch ( IOException e )
+            {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            catch ( JDOMException e )
+            {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+        }
     }
 
 }
