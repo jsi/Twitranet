@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Enonic Twitranett</string>
+
+  <string name="twitranettMainActivity">Twitranett Messages</string>
+  <string name="twitranettLoginActivity">Twitranett Login</string>
+  <string name="twitranettPropertiesActivity">Twitranett Properties</string>
+
+  <string name="prompt_no">Ny melding:</string>
+  <string name="prompt_en">New message:</string>
+  <string name="login_promt_no">Twitranett Login</string>
+  <string name="login_promt_en">Twitranett Login</string>
+  <string name="username_prompt_no">Brukernavn: </string>
+  <string name="username_prompt_en">User Name: </string>
+  <string name="password_prompt_no">Passord: </string>
+  <string name="password_prompt_en">Password: </string>
+  <string name="login_button_no">Login</string>
+  <string name="login_button_en">Login</string>
+  <string name="clear_button_no">Tøm</string>
+  <string name="clear_button_en">Clear</string>
+</resources>
