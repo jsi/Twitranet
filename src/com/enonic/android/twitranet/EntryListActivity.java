@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.enonic.android.twitranet.login.LoginActivity;
 
@@ -139,7 +140,14 @@ public class EntryListActivity
             }
             catch ( IOException e )
             {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                String message = e.getMessage();
+                String toastMessage;
+                if (message.contains( "authentication" )) {
+                    toastMessage = "Login error!";
+                } else {
+                    toastMessage = "Communication error!";
+                }
+                Toast.makeText( getListView().getContext(), toastMessage, Toast.LENGTH_LONG ).show();
             }
             catch ( JDOMException e )
             {

@@ -35,6 +35,16 @@ public class LoginActivity extends Activity
                 finish();
             }
         } );
+
+        Button clearButton = (Button) findViewById( R.id.clearLoginButton );
+        clearButton.setOnClickListener( new View.OnClickListener() {
+            public void onClick( View view ) {
+                EditText userNameField = (EditText) findViewById( R.id.username );
+                EditText passwordField = (EditText) findViewById( R.id.password );
+                userNameField.setText( "" );
+                passwordField.setText( "" );
+            }
+        });
     }
 
 
