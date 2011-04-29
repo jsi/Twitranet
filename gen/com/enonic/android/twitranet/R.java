@@ -24,19 +24,6 @@ public final class R {
         public static final int logout_icon=0x7f02000a;
         public static final int preferences_icon=0x7f02000b;
         public static final int th_line=0x7f02000c;
-        public static final int user_bhj_64=0x7f02000d;
-        public static final int user_daa_64=0x7f02000e;
-        public static final int user_dummy_64=0x7f02000f;
-        public static final int user_jsi_64=0x7f020010;
-        public static final int user_jvs_64=0x7f020011;
-        public static final int user_liv_64=0x7f020012;
-        public static final int user_ljl=0x7f020013;
-        public static final int user_mer_64=0x7f020014;
-        public static final int user_rmy_64=0x7f020015;
-        public static final int user_tan=0x7f020016;
-        public static final int user_tlo_64=0x7f020017;
-        public static final int user_tre_64=0x7f020018;
-        public static final int user_tsi_64=0x7f020019;
     }
     public static final class id {
         public static final int clearLoginButton=0x7f060007;
