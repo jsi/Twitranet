@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import org.jdom.JDOMException;
 
 import android.app.ListActivity;
@@ -127,8 +130,8 @@ public class EntryListActivity
         if (requestCode == ACTIVITY_LOGIN) {
 
             super.onActivityResult( requestCode, resultCode, intent );
-            this.m_adapter.setUsername( intent.getExtras().getString( EntryArrayAdapter.KEY_USERNAME ) );
-            this.m_adapter.setPassword( intent.getExtras().getString( EntryArrayAdapter.KEY_PASSWORD ) );
+            this.m_adapter.setUsername( intent.getExtras().getString( getResources().getText(R.string.key_username).toString() ) );
+            this.m_adapter.setPassword( intent.getExtras().getString( getResources().getText(R.string.key_password).toString() ) );
             try
             {
                 this.m_adapter.refreshDataFromServer();
@@ -136,7 +139,7 @@ public class EntryListActivity
             }
             catch ( ParseException e )
             {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                e.printStackTrace();
             }
             catch ( IOException e )
             {
@@ -151,9 +154,38 @@ public class EntryListActivity
             }
             catch ( JDOMException e )
             {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                e.printStackTrace();
             }
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.logout_menu:
+
+                this.m_adapter.setUsername("");
+                this.m_adapter.setPassword("");
+                Intent i = new Intent( this, LoginActivity.class );
+                startActivityForResult( i, ACTIVITY_LOGIN );
+                return true;
+
+            case R.id.preferences_menu:
+
+                // TODO Implement preferences menu
+                return super.onOptionsItemSelected(item);
+
+            default:
+                
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
