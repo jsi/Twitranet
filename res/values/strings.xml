@@ -14,8 +14,17 @@
   <string name="username_prompt_en">User Name: </string>
   <string name="password_prompt_no">Passord: </string>
   <string name="password_prompt_en">Password: </string>
-  <string name="login_button_no">Login</string>
+  <string name="login_button_no">Logg in</string>
   <string name="login_button_en">Login</string>
   <string name="clear_button_no">Tøm</string>
   <string name="clear_button_en">Clear</string>
+  <string name="menu_preferences_en">Preferences</string>
+  <string name="menu_preferences_no">Egenskaper</string>
+  <string name="menu_logout_en">Logout</string>
+  <string name="menu_logout_no">Logg ut</string>
+
+  <!-- internal keys -->
+  <string name="key_username">k_username</string>
+  <string name="key_password">k_password</string>
+
 </resources>
