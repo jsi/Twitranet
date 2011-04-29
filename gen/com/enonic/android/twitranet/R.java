@@ -14,16 +14,12 @@ public final class R {
         public static final int enonic=0x7f020000;
         public static final int enonic_tab=0x7f020001;
         public static final int enonic_tab_transparent=0x7f020002;
-        public static final int ic_tab_artists_grey=0x7f020003;
-        public static final int ic_tab_artists_white=0x7f020004;
-        public static final int ic_tab_bilder=0x7f020005;
-        public static final int ic_tab_countries=0x7f020006;
-        public static final int icon=0x7f020007;
-        public static final int icon_images=0x7f020008;
-        public static final int icon_images_folder=0x7f020009;
-        public static final int logout_icon=0x7f02000a;
-        public static final int preferences_icon=0x7f02000b;
-        public static final int th_line=0x7f02000c;
+        public static final int icon=0x7f020003;
+        public static final int icon_images=0x7f020004;
+        public static final int icon_images_folder=0x7f020005;
+        public static final int logout_icon=0x7f020006;
+        public static final int preferences_icon=0x7f020007;
+        public static final int th_line=0x7f020008;
     }
     public static final class id {
         public static final int clearLoginButton=0x7f060007;
