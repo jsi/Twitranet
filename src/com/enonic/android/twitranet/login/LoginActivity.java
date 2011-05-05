@@ -58,6 +58,13 @@ public class LoginActivity extends Activity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO: Implement preferences
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.preferences_menu:
+
+                // TODO Implement preferences menu
+                return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

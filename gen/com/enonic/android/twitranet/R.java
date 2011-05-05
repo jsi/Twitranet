@@ -12,14 +12,13 @@ public final class R {
     }
     public static final class drawable {
         public static final int enonic=0x7f020000;
-        public static final int enonic_tab=0x7f020001;
-        public static final int enonic_tab_transparent=0x7f020002;
-        public static final int icon=0x7f020003;
-        public static final int icon_images=0x7f020004;
-        public static final int icon_images_folder=0x7f020005;
-        public static final int logout_icon=0x7f020006;
-        public static final int preferences_icon=0x7f020007;
-        public static final int th_line=0x7f020008;
+        public static final int enonic_tab_transparent=0x7f020001;
+        public static final int icon=0x7f020002;
+        public static final int icon_images=0x7f020003;
+        public static final int icon_images_folder=0x7f020004;
+        public static final int logout_icon=0x7f020005;
+        public static final int preferences_icon=0x7f020006;
+        public static final int th_line=0x7f020007;
     }
     public static final class id {
         public static final int clearLoginButton=0x7f060007;
@@ -44,7 +43,7 @@ public final class R {
     public static final class layout {
         public static final int login_layout=0x7f030000;
         public static final int twitranett_layout=0x7f030001;
-        public static final int twitranett_list_item=0x7f030002;
+        public static final int list_item =0x7f030002;
     }
     public static final class menu {
         public static final int login_menu=0x7f050000;

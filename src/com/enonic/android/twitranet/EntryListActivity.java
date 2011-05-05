@@ -44,7 +44,7 @@ public class EntryListActivity
         {
             Log.d( CLASS, "calling CreateEntryAdapter()" );
         }
-        this.m_adapter = new EntryArrayAdapter( this, R.layout.twitranett_list_item, m_options );
+        this.m_adapter = new EntryArrayAdapter( this, R.layout.list_item, m_options );
         ListView listView = getListView();
         listView.setAdapter( this.m_adapter );
         listView.setSmoothScrollbarEnabled( true );
