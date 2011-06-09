@@ -30,8 +30,8 @@ import com.enonic.android.twitranet.util.Base64Util;
 
 public class EntryArrayAdapter
         extends ArrayAdapter<EntryDataHolder> {
-    public static final String CLASS = EntryArrayAdapter.class.getSimpleName();
 
+    public static final String CLASS = EntryArrayAdapter.class.getSimpleName();
     public static final boolean DEBUG = true;
 
 
@@ -56,18 +56,12 @@ public class EntryArrayAdapter
 
     public EntryArrayAdapter(Context context, int textViewResourceId, List<EntryDataHolder> objects) {
         super(context, textViewResourceId, objects);
-        if (DEBUG) {
-            Log.d(CLASS, "create test data ");
-        }
         if (objects == null || objects.size() == 0) {
             try {
                 refreshDataFromServer();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-        if (DEBUG) {
-            Log.d(CLASS, "set up LayoutInflater from context");
         }
         this.mInflater = LayoutInflater.from(context);
         this.layoutResource = textViewResourceId;
@@ -85,24 +79,24 @@ public class EntryArrayAdapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (DEBUG) {
-            Log.d(CLASS, "start getView()");
+            Log.d(CLASS, "start getView() for position: " + position);
         }
         final ViewHolder holder;
         View v = convertView;
         if (v == null) {
             if (DEBUG) {
-                Log.d(CLASS, "mInflater inflate history_list_item");
+                Log.d(CLASS, "Convert View is NULL at position: " + position + "/" + getCount());
             }
             v = mInflater.inflate(layoutResource, null);
-            if (DEBUG) {
-                Log.d(CLASS, "set up ViewHolder");
-            }
             holder = new ViewHolder();
             holder.userImage = (ImageView) v.findViewById(R.id.userImage);
             holder.text = (TextView) v.findViewById(R.id.entryText);
             holder.date = (TextView) v.findViewById(R.id.dateText);
             v.setTag(holder);
         } else {
+            if (DEBUG) {
+                Log.d(CLASS, "Convert View at position: " + position + "/" + getCount() + " set to id: " + v.getId());
+            }
             holder = (ViewHolder) v.getTag();
         }
 
@@ -110,7 +104,7 @@ public class EntryArrayAdapter
 
         if (data != null) {
             if (DEBUG) {
-                Log.d(CLASS, "data is not null");
+                Log.d(CLASS, "data is not null " + position + "/" + getCount());
             }
             //loading first line
             holder.date.setText(data.getEntryDate());
@@ -119,7 +113,7 @@ public class EntryArrayAdapter
             holder.text.setText(data.getEntryText());
             holder.text.setVisibility(View.VISIBLE);
             //loading icon
-            Bitmap userimage = null;
+            Bitmap userimage;
             try {
                 userimage = loadImageFromServer(data.getImageUrl());
                 holder.userImage.setImageBitmap(userimage);
@@ -127,10 +121,6 @@ public class EntryArrayAdapter
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
 //            holder.userImage.setImageResource(data.getThumbId());
-        } else {
-            holder.userImage.setImageResource(R.drawable.th_line);
-            holder.text.setVisibility(View.GONE);
-            holder.date.setVisibility(View.GONE);
         }
 
         return v;
@@ -146,7 +136,7 @@ public class EntryArrayAdapter
         connection.setRequestProperty("Authorization", "Basic " + encodedAuthorization);
         connection.connect();
         InputStream xmlResponse = connection.getInputStream();
-        BufferedInputStream buffer = new BufferedInputStream(xmlResponse);
+        BufferedInputStream buffer = new BufferedInputStream(xmlResponse, 8096);
         return BitmapFactory.decodeStream(buffer);
     }
 

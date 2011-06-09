@@ -16,6 +16,10 @@
   <string name="password_prompt_en">Password: </string>
   <string name="login_button_no">Logg in</string>
   <string name="login_button_en">Login</string>
+  <string name="set_button_no">Sett</string>
+  <string name="set_button_en">Set</string>
+  <string name="cancel_button_no">Avbryt</string>
+  <string name="cancel_button_en">Cancel</string>
   <string name="clear_button_no">Tøm</string>
   <string name="clear_button_en">Clear</string>
   <string name="menu_preferences_en">Preferences</string>

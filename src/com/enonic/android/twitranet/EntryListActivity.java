@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import com.enonic.android.twitranet.properties.PropertiesActivity;
 import org.jdom.JDOMException;
 
 import android.app.ListActivity;
@@ -46,8 +47,8 @@ public class EntryListActivity
         }
         this.m_adapter = new EntryArrayAdapter( this, R.layout.list_item, m_options );
         ListView listView = getListView();
-        listView.setAdapter( this.m_adapter );
-        listView.setSmoothScrollbarEnabled( true );
+        listView.setAdapter(this.m_adapter);
+        listView.setSmoothScrollbarEnabled(true);
 
         Intent i = new Intent( this, LoginActivity.class );
         startActivityForResult( i, ACTIVITY_LOGIN );
@@ -180,7 +181,7 @@ public class EntryListActivity
 
             case R.id.preferences_menu:
 
-                // TODO Implement preferences menu
+                startActivity(new Intent( this, PropertiesActivity.class ));
                 return super.onOptionsItemSelected(item);
 
             default:

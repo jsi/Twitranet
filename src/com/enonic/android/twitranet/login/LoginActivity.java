@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import com.enonic.android.twitranet.R;
+import com.enonic.android.twitranet.properties.PropertiesActivity;
 
 public class LoginActivity extends Activity
 {
@@ -57,11 +58,11 @@ public class LoginActivity extends Activity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO: Implement preferences
         switch (item.getItemId()) {
             case R.id.preferences_menu:
 
-                // TODO Implement preferences menu
+                Intent i = new Intent( this, PropertiesActivity.class );
+                startActivity(i);
                 return super.onOptionsItemSelected(item);
             default:
                 return super.onOptionsItemSelected(item);

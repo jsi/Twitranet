@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content">
+<!--    <TextView android:id="@+id/propertyName"
+              android:textColor="#FFFFFF"
+              android:singleLine="true"
+              android:padding="2dip"
+              android:layout_alignParentTop="true"
+              android:layout_alignParentLeft="true"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"/>-->
+    <EditText android:id="@+id/propertyValue"
+              android:layout_height="wrap_content"
+              android:layout_width="fill_parent"
+              android:textSize="10pt"
+              android:background="@android:drawable/editbox_background"/>
+    <RelativeLayout android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center">
+      <Button android:id="@+id/setButton"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:padding="2dip"
+              android:text="@string/set_button_no"
+              android:textSize="12pt"/>
+      <Button android:id="@+id/cancelButton"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_toLeftOf="@id/setButton"
+              android:layout_alignTop="@id/setButton"
+              android:padding="2dip"
+              android:text="@string/cancel_button_no"
+              android:textSize="12pt"/>
+    </RelativeLayout>
+
+</LinearLayout>
