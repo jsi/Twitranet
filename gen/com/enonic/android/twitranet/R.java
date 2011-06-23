@@ -22,7 +22,7 @@ public final class R {
         public static final int preferences_icon=0x7f020008;
     }
     public static final class id {
-        public static final int cancelButton=0x7f060011;
+        public static final int cancelButton=0x7f06000e;
         public static final int clearLoginButton=0x7f06000b;
         public static final int dateText=0x7f060003;
         public static final int emptyLine=0x7f060004;
@@ -35,13 +35,13 @@ public final class R {
         public static final int newMessageLabel=0x7f060012;
         public static final int password=0x7f060009;
         public static final int passwordPrompt=0x7f060008;
-        public static final int popupButton=0x7f06000d;
+        public static final int popupButton=0x7f060010;
         public static final int preferences_menu=0x7f060016;
-        public static final int propertyItem=0x7f06000c;
-        public static final int propertyName=0x7f06000e;
-        public static final int propertyValue=0x7f06000f;
+        public static final int propertyItem=0x7f06000f;
+        public static final int propertyName=0x7f060011;
+        public static final int propertyValue=0x7f06000c;
         public static final int send=0x7f060014;
-        public static final int setButton=0x7f060010;
+        public static final int setButton=0x7f06000d;
         public static final int slett=0x7f060015;
         public static final int userImage=0x7f060001;
         public static final int username=0x7f060007;
@@ -50,9 +50,10 @@ public final class R {
     public static final class layout {
         public static final int list_item=0x7f030000;
         public static final int login_layout=0x7f030001;
-        public static final int properties_item=0x7f030002;
-        public static final int property_dialog=0x7f030003;
-        public static final int twitranett_layout=0x7f030004;
+        public static final int numeric_property_dialog=0x7f030002;
+        public static final int properties_item=0x7f030003;
+        public static final int text_property_dialog=0x7f030004;
+        public static final int twitranett_layout=0x7f030005;
     }
     public static final class menu {
         public static final int login_menu=0x7f050000;
@@ -80,6 +81,8 @@ public final class R {
         public static final int password_prompt_no=0x7f04000a;
         public static final int prompt_en=0x7f040005;
         public static final int prompt_no=0x7f040004;
+        public static final int property_adapter_class=0x7f04001b;
+        public static final int property_data_type=0x7f04001a;
         public static final int set_button_en=0x7f04000f;
         public static final int set_button_no=0x7f04000e;
         public static final int twitranettLoginActivity=0x7f040002;

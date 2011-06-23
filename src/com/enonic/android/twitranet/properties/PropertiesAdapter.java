@@ -20,13 +20,15 @@ public class PropertiesAdapter extends BaseAdapter {
 
     private Activity mActivity;
 
-    private static int BUTTON_BASE_ID = 100;
+    public static int BUTTON_BASE_ID = 100;
 
     private int[] propertyTypes = new int[]{R.layout.properties_item, R.layout.properties_item, R.layout.properties_item, R.layout.properties_item};
 
     private String[] propertyNames = new String[]{"Server URL", "Message Count", "Refresh Rate (secs)", "Language"};
 
     private String[] propertyValues = new String[]{"", "20", "3000", "NO"};
+
+    private int[] propertyDataTypes = new int[]{R.layout.text_property_dialog, R.layout.numeric_property_dialog, R.layout.numeric_property_dialog, R.layout.text_property_dialog};
 
     public PropertiesAdapter (Activity activity) {
         super();
@@ -70,6 +72,7 @@ public class PropertiesAdapter extends BaseAdapter {
                             Bundle propertyBundle = new Bundle();
                             propertyBundle.putString(Integer.toString(R.id.propertyName), propertyNames[position]);
                             propertyBundle.putString(Integer.toString(R.id.propertyValue), propertyValues[position]);
+                            propertyBundle.putInt(Integer.toString(R.string.property_data_type), propertyDataTypes[position]);
                             mActivity.showDialog(BUTTON_BASE_ID + position, propertyBundle);
                         }
                     }
@@ -91,5 +94,9 @@ public class PropertiesAdapter extends BaseAdapter {
             propValue.setText(data.toString() + " ");
         }
         return v;
+    }
+
+    public void setPropertyValue(int position, String value) {
+        this.propertyValues[position] = value;
     }
 }
