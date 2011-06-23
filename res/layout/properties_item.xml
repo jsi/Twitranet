@@ -11,6 +11,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:padding="5dip"
+            android:background="#000000"
             android:src="@drawable/arrow_down_icon"
             />
   <TextView android:id="@+id/propertyName"

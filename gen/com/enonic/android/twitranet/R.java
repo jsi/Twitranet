@@ -18,7 +18,8 @@ public final class R {
         public static final int icon_images=0x7f020004;
         public static final int icon_images_folder=0x7f020005;
         public static final int logout_icon=0x7f020006;
-        public static final int preferences_icon=0x7f020007;
+        public static final int options_icon=0x7f020007;
+        public static final int preferences_icon=0x7f020008;
     }
     public static final class id {
         public static final int cancelButton=0x7f060011;
