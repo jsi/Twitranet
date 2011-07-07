@@ -18,9 +18,8 @@
                   android:theme="@android:style/Theme.NoTitleBar">
         </activity>
 
-        <activity android:name=".properties.PropertiesActivity" android:label="@string/twitranettPropertiesActivity"
-                  android:theme="@android:style/Theme.Black.NoTitleBar">
+        <activity android:name=".preferences.PreferencesListActivity" android:label="@string/app_name"
+                  android:theme="@android:style/Theme.NoTitleBar">
         </activity>
-
     </application>
-</manifest> 
+</manifest>

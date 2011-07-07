@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import com.enonic.android.twitranet.properties.PropertiesActivity;
+import com.enonic.android.twitranet.preferences.PreferencesListActivity;
 import org.jdom.JDOMException;
 
 import android.app.ListActivity;
@@ -189,7 +189,7 @@ public class EntryListActivity
 
             case R.id.preferences_menu:
 
-                startActivity(new Intent( this, PropertiesActivity.class ));
+                startActivity(new Intent( this, PreferencesListActivity.class ));
                 return super.onOptionsItemSelected(item);
 
             default:

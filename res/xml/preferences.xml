@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="Server Preferences"
+        android:key="server_preferences">
+
+        <EditTextPreference
+            android:key="server_url"
+            android:title="Server URL"
+            android:summary="Server adress for Twitranet messages"
+            android:defaultValue=""
+            android:inputType="textNoSuggestions"
+        />
+
+        <EditTextPreference
+            android:key="message_count"
+            android:title="Message Count"
+            android:summary="The number of messages to list in the screen"
+            android:defaultValue="20"
+            android:inputType="number"
+        />
+
+        <EditTextPreference
+            android:key="refresh_rate"
+            android:title="Refresh Rate (secs)"
+            android:summary="The number of seconds between every time the server is checked for new messages"
+            android:defaultValue="3000"
+            android:inputType="number"
+        />
+
+        <ListPreference
+            android:key="language_code"
+            android:title="Language"
+            android:summary="Select the language for the GUI"
+            android:defaultValue="no"
+            android:entries="@array/languageNames_no"
+            android:entryValues="@array/languageCodes"
+        />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

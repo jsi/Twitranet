@@ -9,9 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import com.enonic.android.twitranet.R;
-import com.enonic.android.twitranet.properties.PropertiesActivity;
+import com.enonic.android.twitranet.preferences.PreferencesListActivity;
 
 public class LoginActivity extends Activity
 {
@@ -21,6 +20,7 @@ public class LoginActivity extends Activity
     {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.login_layout );
+        
 
 //        TextView passwordInput = (TextView) findViewById(R.id.password);
 //        passwordInput.
@@ -65,7 +65,7 @@ public class LoginActivity extends Activity
         switch (item.getItemId()) {
             case R.id.preferences_menu:
 
-                Intent i = new Intent( this, PropertiesActivity.class );
+                Intent i = new Intent( this, PreferencesListActivity.class );
                 startActivity(i);
                 return super.onOptionsItemSelected(item);
             default:

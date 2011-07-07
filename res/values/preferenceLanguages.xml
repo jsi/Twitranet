@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string-array name="languageCodes">
+        <item name="no">no</item>
+        <item name="en">en</item>
+        <item name="sv">sv</item>
+        <item name="dk">dk</item>
+        <item name="fr">fr</item>
+    </string-array>
+
+    <string-array name="languageNames_no">
+        <item name="no">Norsk</item>
+        <item name="en">Engelsk</item>
+        <item name="sv">Svensk</item>
+        <item name="dk">Dansk</item>
+        <item name="fr">Fransk</item>
+    </string-array>
+
+    <string-array name="languageNames_en">
+        <item name="no">Norwegian</item>
+        <item name="en">English</item>
+        <item name="sv">Swedish</item>
+        <item name="dk">Danish</item>
+        <item name="fr">French</item>
+    </string-array>
+
+    <string-array name="languageNames_sv">
+        <item name="no">Norska</item>
+        <item name="en">Engelska</item>
+        <item name="sv">Svenska</item>
+        <item name="dk">Danska</item>
+        <item name="fr">Franska</item>
+    </string-array>
+
+    <string-array name="languageNames_dk">
+        <item name="no">Norsk</item>
+        <item name="en">Engelsk</item>
+        <item name="sv">Svensk</item>
+        <item name="dk">Dansk</item>
+        <item name="fr">Fransk</item>
+    </string-array>
+
+    <string-array name="languageNames_fr">
+        <item name="no">Norvégien</item>
+        <item name="en">Anglais</item>
+        <item name="sv">Suédois</item>
+        <item name="dk">Danois</item>
+        <item name="fr">Français</item>
+    </string-array>
+
+</resources>
