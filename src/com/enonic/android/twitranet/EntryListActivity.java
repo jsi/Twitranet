@@ -130,6 +130,8 @@ public class EntryListActivity
     {
         if (requestCode == ACTIVITY_LOGIN) {
 
+            boolean loginFailed = true;
+
             super.onActivityResult( requestCode, resultCode, intent );
             this.m_adapter.setUsername( intent.getExtras().getString( getResources().getText(R.string.key_username).toString() ) );
             this.m_adapter.setPassword( intent.getExtras().getString( getResources().getText(R.string.key_password).toString() ) );
@@ -137,6 +139,7 @@ public class EntryListActivity
             {
                 this.m_adapter.refreshDataFromServer();
                 this.m_adapter.notifyDataSetChanged();
+                loginFailed = false;
             }
             catch ( ParseException e )
             {
@@ -156,6 +159,11 @@ public class EntryListActivity
             catch ( JDOMException e )
             {
                 e.printStackTrace();
+            }
+
+            if (loginFailed) {
+                Intent i = new Intent( this, LoginActivity.class );
+                startActivityForResult( i, ACTIVITY_LOGIN );
             }
         }
     }

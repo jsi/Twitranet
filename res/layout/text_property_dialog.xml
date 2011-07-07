@@ -9,6 +9,7 @@
               android:layout_alignParentTop="true"
               android:textSize="12pt"
               android:singleLine="true"
+              android:inputType="textNoSuggestions"
               android:isScrollContainer="false"
               android:background="@android:drawable/editbox_background"/>
     <Button android:id="@+id/setButton"

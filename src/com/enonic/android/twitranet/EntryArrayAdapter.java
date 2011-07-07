@@ -137,8 +137,7 @@ public class EntryArrayAdapter
         return BitmapFactory.decodeStream(buffer);
     }
 
-    public void refreshDataFromServer()
-            throws ParseException, JDOMException, IOException {
+    public void refreshDataFromServer() throws ParseException, JDOMException, IOException {
         for (int count = getCount() - 1; count >= 0; count--) {
             remove(getItem(count));
         }

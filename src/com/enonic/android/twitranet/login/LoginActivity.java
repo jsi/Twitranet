@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import com.enonic.android.twitranet.R;
 import com.enonic.android.twitranet.properties.PropertiesActivity;
 
@@ -20,6 +21,9 @@ public class LoginActivity extends Activity
     {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.login_layout );
+
+//        TextView passwordInput = (TextView) findViewById(R.id.password);
+//        passwordInput.
 
         Button loginButton = (Button) findViewById( R.id.loginButton );
         loginButton.setOnClickListener( new View.OnClickListener() {

@@ -19,6 +19,16 @@ public class PropertiesActivity extends ListActivity {
     }
 
     @Override
+    protected void onRestoreInstanceState(final Bundle state) {
+        super.onRestoreInstanceState(state);    //To change body of overridden methods use File | Settings | File Templates.
+    }
+
+    @Override
+    protected void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);    //To change body of overridden methods use File | Settings | File Templates.
+    }
+
+    @Override
     protected Dialog onCreateDialog(final int id, final Bundle args) {
         final int position = id - PropertiesAdapter.BUTTON_BASE_ID;
         PropertiesDialog dialog = new PropertiesDialog(this);
