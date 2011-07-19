@@ -1,13 +1,22 @@
 package com.enonic.android.twitranet;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import com.enonic.android.twitranet.preferences.PreferencesListActivity;
+import com.enonic.android.twitranet.util.Base64Util;
+import org.jdom.Document;
+import org.jdom.Element;
 import org.jdom.JDOMException;
 
 import android.app.ListActivity;
@@ -18,6 +27,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.enonic.android.twitranet.login.LoginActivity;
+import org.jdom.input.SAXBuilder;
 
 public class EntryListActivity
     extends ListActivity
@@ -33,6 +43,17 @@ public class EntryListActivity
     private EntryArrayAdapter m_adapter;
 
 //    private Runnable entryListActivity;
+
+    private String serverUrl = "http://intra.enonic.com/";
+//    private String serverUrl = "http://vtnode1:8080/cms-commando-unstable-enonic/site/41/";
+
+    private Integer messageCount = 20;
+
+    private String username;
+
+    private String password;
+
+
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -135,12 +156,12 @@ public class EntryListActivity
             super.onActivityResult( requestCode, resultCode, intent );
 
             // Important to set "rememberMe" first, as it is used by the following to setters for username and password.
-            this.m_adapter.setRememberMe( intent.getExtras().getBoolean( getResources().getText(R.string.key_rememberMe).toString() ) );
-            this.m_adapter.setUsername( intent.getExtras().getString( getResources().getText(R.string.key_username).toString() ) );
-            this.m_adapter.setPassword( intent.getExtras().getString( getResources().getText(R.string.key_password).toString() ) );
+            setRememberMe( intent.getExtras().getBoolean( getResources().getText(R.string.key_rememberMe).toString() ) );
+            setUsername( intent.getExtras().getString( getResources().getText(R.string.key_username).toString() ) );
+            setPassword( intent.getExtras().getString( getResources().getText(R.string.key_password).toString() ) );
             try
             {
-                this.m_adapter.refreshDataFromServer();
+                refreshDataFromServer();
                 this.m_adapter.notifyDataSetChanged();
                 loginFailed = false;
             }
@@ -171,6 +192,36 @@ public class EntryListActivity
         }
     }
 
+    public void refreshDataFromServer() throws ParseException, JDOMException, IOException {
+
+        if (getUsername() != null && getUsername().length() > 0 && getPassword() != null && getPassword().length() > 0) {
+            URL twitranettMessagesURL = new URL(serverUrl + "twitranettmessages?count=" + messageCount);
+            HttpURLConnection connection = (HttpURLConnection) twitranettMessagesURL.openConnection();
+            connection.setRequestMethod("POST");
+
+            String userpassword = getUsername() + ":" + getPassword();
+            String encodedAuthorization = Base64Util.encode(userpassword.getBytes());
+            connection.setRequestProperty("Authorization", "Basic " + encodedAuthorization);
+            connection.connect();
+            InputStream xmlResponse = connection.getInputStream();
+
+            SAXBuilder xmlDocumentBuilder = new SAXBuilder(false);
+            Document twitranettXML = xmlDocumentBuilder.build(xmlResponse);
+            List<Element> tweets = twitranettXML.getRootElement().getChild("twitrs").getChildren("twitr");
+            m_adapter.deleteAll();
+            for (Element tweet : tweets) {
+                String tOwner = tweet.getAttributeValue("owner");
+                String tText = tweet.getChild("message").getText();
+                String tDate = tweet.getAttributeValue("created");
+                String tPhotoUrl = tweet.getChild("photo-url").getText();
+//                String tPhotoUrl = tweet.getChild("large-photo-url").getText();
+                m_adapter.addMessage(tText, tOwner, tDate, tPhotoUrl);
+            }
+        }
+
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -184,8 +235,6 @@ public class EntryListActivity
 
             case R.id.logout_menu:
 
-                this.m_adapter.setUsername("");
-                this.m_adapter.setPassword("");
                 Intent i = new Intent( this, LoginActivity.class );
                 startActivityForResult( i, ACTIVITY_LOGIN );
                 return true;
@@ -200,4 +249,74 @@ public class EntryListActivity
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public String getUsername () {
+        if (username == null) {
+            if (getRememberMe()) {
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+                String usernameKey = getResources().getText(R.string.key_username).toString();
+                String spUsername = sharedPreferences.getString(usernameKey, null);
+                username = spUsername;
+            }
+        }
+        return username;
+    }
+
+    public void setUsername (String uid) {
+        username = uid;
+        if (getRememberMe()) {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            String usernameKey = getResources().getText(R.string.key_username).toString();
+            String storedUsername = sharedPreferences.getString(usernameKey, null);
+            if (storedUsername == null || !storedUsername.equals(uid)) {
+                SharedPreferences.Editor spEditor = sharedPreferences.edit();
+                spEditor.putString(usernameKey, uid);
+                spEditor.commit();
+            }
+        }
+    }
+
+    public String getPassword () {
+        if (password == null) {
+            if (getRememberMe()) {
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+                String passwordKey = getResources().getText(R.string.key_password).toString();
+                String spPassword = sharedPreferences.getString(passwordKey, null);
+                password = spPassword;
+            }
+        }
+        return password;
+    }
+
+    public void setPassword (String pw) {
+        password = pw;
+        if (getRememberMe()) {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            String passwordKey = getResources().getText(R.string.key_password).toString();
+            String storedPassword = sharedPreferences.getString(passwordKey, null);
+            if (storedPassword == null || !storedPassword.equals(pw)) {
+                SharedPreferences.Editor spEditor = sharedPreferences.edit();
+                spEditor.putString(passwordKey, pw);
+                spEditor.commit();
+            }
+        }
+    }
+
+    public Boolean getRememberMe () {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String rememberMeKey = getResources().getText(R.string.key_rememberMe).toString();
+        return sharedPreferences.getBoolean(rememberMeKey, false);
+    }
+
+    public void setRememberMe (Boolean rememberMe) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String rememberMeKey = getResources().getText(R.string.key_rememberMe).toString();
+        Boolean storedRememberMe = sharedPreferences.getBoolean(rememberMeKey, !rememberMe);
+        if (storedRememberMe != rememberMe) {
+            SharedPreferences.Editor spEditor = sharedPreferences.edit();
+            spEditor.putBoolean(rememberMeKey, rememberMe);
+            spEditor.commit();
+        }
+    }
+
 }
