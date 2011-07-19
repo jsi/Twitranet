@@ -32,6 +32,7 @@
   <!-- internal keys -->
   <string name="key_username">k_username</string>
   <string name="key_password">k_password</string>
+  <string name="key_rememberMe">k_rememberMe</string>
   <string name="property_data_type">propertyDataType</string>
   <string name="property_adapter_class">propertyAdapterClass</string>
 

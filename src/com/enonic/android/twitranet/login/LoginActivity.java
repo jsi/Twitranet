@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import com.enonic.android.twitranet.R;
 import com.enonic.android.twitranet.preferences.PreferencesListActivity;
@@ -20,10 +21,6 @@ public class LoginActivity extends Activity
     {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.login_layout );
-        
-
-//        TextView passwordInput = (TextView) findViewById(R.id.password);
-//        passwordInput.
 
         Button loginButton = (Button) findViewById( R.id.loginButton );
         loginButton.setOnClickListener( new View.OnClickListener() {
@@ -33,10 +30,13 @@ public class LoginActivity extends Activity
                 Intent callingIntent = getIntent();
                 EditText userNameField = (EditText) findViewById( R.id.username );
                 EditText passwordField = (EditText) findViewById( R.id.password );
+                CheckBox rememberMeField = (CheckBox) findViewById( R.id.rememberMe );
                 final String userNameEntered = userNameField.getText().toString();
                 final String passwordEntered = passwordField.getText().toString();
+                final Boolean rememberMeEntered = rememberMeField.isChecked();
                 callingIntent.putExtra( getResources().getText(R.string.key_username).toString(), userNameEntered );
                 callingIntent.putExtra( getResources().getText(R.string.key_password).toString(), passwordEntered );
+                callingIntent.putExtra( getResources().getText(R.string.key_rememberMe).toString(), rememberMeEntered );
                 setResult( RESULT_OK, callingIntent );
                 finish();
             }

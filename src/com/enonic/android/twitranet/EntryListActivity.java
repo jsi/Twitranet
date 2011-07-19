@@ -133,6 +133,9 @@ public class EntryListActivity
             boolean loginFailed = true;
 
             super.onActivityResult( requestCode, resultCode, intent );
+
+            // Important to set "rememberMe" first, as it is used by the following to setters for username and password.
+            this.m_adapter.setRememberMe( intent.getExtras().getBoolean( getResources().getText(R.string.key_rememberMe).toString() ) );
             this.m_adapter.setUsername( intent.getExtras().getString( getResources().getText(R.string.key_username).toString() ) );
             this.m_adapter.setPassword( intent.getExtras().getString( getResources().getText(R.string.key_password).toString() ) );
             try

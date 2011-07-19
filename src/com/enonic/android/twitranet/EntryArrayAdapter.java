@@ -1,8 +1,10 @@
 package com.enonic.android.twitranet;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +33,6 @@ public class EntryArrayAdapter
     public static final String CLASS = EntryArrayAdapter.class.getSimpleName();
     public static final boolean DEBUG = true;
 
-
     private LayoutInflater mInflater;
 
     private int layoutResource;
@@ -51,8 +52,8 @@ public class EntryArrayAdapter
 
     private String password;
 
-    public EntryArrayAdapter(Context context, int textViewResourceId, List<EntryDataHolder> objects) {
-        super(context, textViewResourceId, objects);
+    public EntryArrayAdapter(Context ctx, int textViewResId, List<EntryDataHolder> objects) {
+        super(ctx, textViewResId, objects);
         if (objects == null || objects.size() == 0) {
             try {
                 refreshDataFromServer();
@@ -60,8 +61,8 @@ public class EntryArrayAdapter
                 e.printStackTrace();
             }
         }
-        this.mInflater = LayoutInflater.from(context);
-        this.layoutResource = textViewResourceId;
+        mInflater = LayoutInflater.from(ctx);
+        layoutResource = textViewResId;
     }
 
     private static class ViewHolder {
@@ -115,9 +116,8 @@ public class EntryArrayAdapter
                 userimage = loadImageFromServer(data.getImageUrl());
                 holder.userImage.setImageBitmap(userimage);
             } catch (IOException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                e.printStackTrace();
             }
-//            holder.userImage.setImageResource(data.getThumbId());
         }
 
         return v;
@@ -128,7 +128,7 @@ public class EntryArrayAdapter
         HttpURLConnection connection = (HttpURLConnection) imageURL.openConnection();
         connection.setRequestMethod("POST");
 
-        String userpassword = username + ":" + password;
+        String userpassword = getUsername() + ":" + getPassword();
         String encodedAuthorization = Base64Util.encode(userpassword.getBytes());
         connection.setRequestProperty("Authorization", "Basic " + encodedAuthorization);
         connection.connect();
@@ -138,16 +138,14 @@ public class EntryArrayAdapter
     }
 
     public void refreshDataFromServer() throws ParseException, JDOMException, IOException {
-        for (int count = getCount() - 1; count >= 0; count--) {
-            remove(getItem(count));
-        }
+        deleteAll();
 
-        if (username != null && username.length() > 0 && password != null && password.length() > 0) {
+        if (getUsername() != null && getUsername().length() > 0 && getPassword() != null && getPassword().length() > 0) {
             URL twitranettMessagesURL = new URL(serverUrl + "twitranettmessages?count=" + messageCount);
             HttpURLConnection connection = (HttpURLConnection) twitranettMessagesURL.openConnection();
             connection.setRequestMethod("POST");
 
-            String userpassword = username + ":" + password;
+            String userpassword = getUsername() + ":" + getPassword();
             String encodedAuthorization = Base64Util.encode(userpassword.getBytes());
             connection.setRequestProperty("Authorization", "Basic " + encodedAuthorization);
             connection.connect();
@@ -160,12 +158,22 @@ public class EntryArrayAdapter
                 String tOwner = tweet.getAttributeValue("owner");
                 String tText = tweet.getChild("message").getText();
                 String tDate = tweet.getAttributeValue("created");
-                String tUrl = tweet.getChild("photo-url").getText();
-//                String tUrl = tweet.getChild("large-photo-url").getText();
-                add(new EntryDataHolder(tText, tOwner, tempInputFormat.parse(tDate), tUrl));
+                String tPhotoUrl = tweet.getChild("photo-url").getText();
+//                String tPhotoUrl = tweet.getChild("large-photo-url").getText();
+                addMessage(tText, tOwner, tDate, tPhotoUrl);
             }
         }
 
+    }
+
+    public void addMessage(String text, String owner, String date, String photoUrl) throws ParseException {
+        add(new EntryDataHolder(text, owner, tempInputFormat.parse(date), photoUrl));
+    }
+
+    public void deleteAll() {
+        for (int count = getCount() - 1; count >= 0; count--) {
+            remove(getItem(count));
+        }
     }
 
     public void setServerUrl(String serverUrl) {
@@ -184,13 +192,73 @@ public class EntryArrayAdapter
         this.language = language;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getUsername () {
+        if (username == null) {
+            if (getRememberMe()) {
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                String usernameKey = getContext().getResources().getText(R.string.key_username).toString();
+                String spUsername = sharedPreferences.getString(usernameKey, null);
+                username = spUsername;
+            }
+        }
+        return username;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUsername (String uid) {
+        username = uid;
+        if (getRememberMe()) {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            String usernameKey = getContext().getResources().getText(R.string.key_username).toString();
+            String storedUsername = sharedPreferences.getString(usernameKey, null);
+            if (storedUsername == null || !storedUsername.equals(uid)) {
+                SharedPreferences.Editor spEditor = sharedPreferences.edit();
+                spEditor.putString(usernameKey, uid);
+                spEditor.commit();
+            }
+        }
     }
 
+    public String getPassword () {
+        if (password == null) {
+            if (getRememberMe()) {
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                String passwordKey = getContext().getResources().getText(R.string.key_password).toString();
+                String spPassword = sharedPreferences.getString(passwordKey, null);
+                password = spPassword;
+            }
+        }
+        return password;
+    }
+
+    public void setPassword (String pw) {
+        password = pw;
+        if (getRememberMe()) {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            String passwordKey = getContext().getResources().getText(R.string.key_password).toString();
+            String storedPassword = sharedPreferences.getString(passwordKey, null);
+            if (storedPassword == null || !storedPassword.equals(pw)) {
+                SharedPreferences.Editor spEditor = sharedPreferences.edit();
+                spEditor.putString(passwordKey, pw);
+                spEditor.commit();
+            }
+        }
+    }
+
+    public Boolean getRememberMe () {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String rememberMeKey = getContext().getResources().getText(R.string.key_rememberMe).toString();
+        return sharedPreferences.getBoolean(rememberMeKey, false);
+    }
+
+    public void setRememberMe (Boolean rememberMe) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String rememberMeKey = getContext().getResources().getText(R.string.key_rememberMe).toString();
+        Boolean storedRememberMe = sharedPreferences.getBoolean(rememberMeKey, !rememberMe);
+        if (storedRememberMe != rememberMe) {
+            SharedPreferences.Editor spEditor = sharedPreferences.edit();
+            spEditor.putBoolean(rememberMeKey, rememberMe);
+            spEditor.commit();
+        }
+    }
 
 }

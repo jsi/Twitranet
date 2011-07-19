@@ -67,6 +67,7 @@ public final class R {
         public static final int clear_button_en=0x7f060013;
         public static final int clear_button_no=0x7f060012;
         public static final int key_password=0x7f06001b;
+        public static final int key_rememberMe=0x7f06001c;
         /**  internal keys 
          */
         public static final int key_username=0x7f06001a;
@@ -82,8 +83,8 @@ public final class R {
         public static final int password_prompt_no=0x7f06000a;
         public static final int prompt_en=0x7f060005;
         public static final int prompt_no=0x7f060004;
-        public static final int property_adapter_class=0x7f06001d;
-        public static final int property_data_type=0x7f06001c;
+        public static final int property_adapter_class=0x7f06001e;
+        public static final int property_data_type=0x7f06001d;
         public static final int remember_me_en=0x7f060018;
         public static final int remember_me_no=0x7f060019;
         public static final int set_button_en=0x7f06000f;
