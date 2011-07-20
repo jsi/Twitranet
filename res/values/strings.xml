@@ -29,6 +29,9 @@
   <string name="remember_me_en"> Remember me </string>
   <string name="remember_me_no"> Husk meg </string>
 
+  <!-- Preferences -->
+  <string name="pref_message_count">message_count</string>
+
   <!-- internal keys -->
   <string name="key_username">k_username</string>
   <string name="key_password">k_password</string>

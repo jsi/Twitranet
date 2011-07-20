@@ -47,13 +47,6 @@ public class EntryListActivity
     private String serverUrl = "http://intra.enonic.com/";
 //    private String serverUrl = "http://vtnode1:8080/cms-commando-unstable-enonic/site/41/";
 
-    private Integer messageCount = 20;
-
-    private String username;
-
-    private String password;
-
-
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -155,10 +148,6 @@ public class EntryListActivity
 
             super.onActivityResult( requestCode, resultCode, intent );
 
-            // Important to set "rememberMe" first, as it is used by the following to setters for username and password.
-            setRememberMe( intent.getExtras().getBoolean( getResources().getText(R.string.key_rememberMe).toString() ) );
-            setUsername( intent.getExtras().getString( getResources().getText(R.string.key_username).toString() ) );
-            setPassword( intent.getExtras().getString( getResources().getText(R.string.key_password).toString() ) );
             try
             {
                 refreshDataFromServer();
@@ -195,7 +184,7 @@ public class EntryListActivity
     public void refreshDataFromServer() throws ParseException, JDOMException, IOException {
 
         if (getUsername() != null && getUsername().length() > 0 && getPassword() != null && getPassword().length() > 0) {
-            URL twitranettMessagesURL = new URL(serverUrl + "twitranettmessages?count=" + messageCount);
+            URL twitranettMessagesURL = new URL(serverUrl + "twitranettmessages?count=" + getMessageCount());
             HttpURLConnection connection = (HttpURLConnection) twitranettMessagesURL.openConnection();
             connection.setRequestMethod("POST");
 
@@ -223,14 +212,14 @@ public class EntryListActivity
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu (Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected (MenuItem item) {
         switch (item.getItemId()) {
 
             case R.id.logout_menu:
@@ -251,72 +240,24 @@ public class EntryListActivity
     }
 
     public String getUsername () {
-        if (username == null) {
-            if (getRememberMe()) {
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-                String usernameKey = getResources().getText(R.string.key_username).toString();
-                String spUsername = sharedPreferences.getString(usernameKey, null);
-                username = spUsername;
-            }
-        }
-        return username;
-    }
-
-    public void setUsername (String uid) {
-        username = uid;
-        if (getRememberMe()) {
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            String usernameKey = getResources().getText(R.string.key_username).toString();
-            String storedUsername = sharedPreferences.getString(usernameKey, null);
-            if (storedUsername == null || !storedUsername.equals(uid)) {
-                SharedPreferences.Editor spEditor = sharedPreferences.edit();
-                spEditor.putString(usernameKey, uid);
-                spEditor.commit();
-            }
-        }
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String usernameKey = getResources().getText(R.string.key_username).toString();
+        return sharedPreferences.getString(usernameKey, null);
     }
 
     public String getPassword () {
-        if (password == null) {
-            if (getRememberMe()) {
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-                String passwordKey = getResources().getText(R.string.key_password).toString();
-                String spPassword = sharedPreferences.getString(passwordKey, null);
-                password = spPassword;
-            }
-        }
-        return password;
-    }
-
-    public void setPassword (String pw) {
-        password = pw;
-        if (getRememberMe()) {
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            String passwordKey = getResources().getText(R.string.key_password).toString();
-            String storedPassword = sharedPreferences.getString(passwordKey, null);
-            if (storedPassword == null || !storedPassword.equals(pw)) {
-                SharedPreferences.Editor spEditor = sharedPreferences.edit();
-                spEditor.putString(passwordKey, pw);
-                spEditor.commit();
-            }
-        }
-    }
-
-    public Boolean getRememberMe () {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String rememberMeKey = getResources().getText(R.string.key_rememberMe).toString();
-        return sharedPreferences.getBoolean(rememberMeKey, false);
+        String passwordKey = getResources().getText(R.string.key_password).toString();
+        return sharedPreferences.getString(passwordKey, null);
     }
 
-    public void setRememberMe (Boolean rememberMe) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String rememberMeKey = getResources().getText(R.string.key_rememberMe).toString();
-        Boolean storedRememberMe = sharedPreferences.getBoolean(rememberMeKey, !rememberMe);
-        if (storedRememberMe != rememberMe) {
-            SharedPreferences.Editor spEditor = sharedPreferences.edit();
-            spEditor.putBoolean(rememberMeKey, rememberMe);
-            spEditor.commit();
+    public Integer getMessageCount () {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String messageCountPreference = prefs.getString("message_count", "0");
+        try {
+            return Integer.parseInt(messageCountPreference);
+        } catch (NumberFormatException e) {
+            return 0;
         }
     }
-
 }
