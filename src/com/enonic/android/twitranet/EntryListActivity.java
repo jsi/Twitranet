@@ -42,11 +42,6 @@ public class EntryListActivity
 
     private EntryArrayAdapter m_adapter;
 
-//    private Runnable entryListActivity;
-
-    private String serverUrl = "http://intra.enonic.com/";
-//    private String serverUrl = "http://vtnode1:8080/cms-commando-unstable-enonic/site/41/";
-
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -66,78 +61,7 @@ public class EntryListActivity
 
         Intent i = new Intent( this, LoginActivity.class );
         startActivityForResult( i, ACTIVITY_LOGIN );
-
-//        if ( DEBUG )
-//        {
-//            Log.d( CLASS, "initiate new viewTest = new Runable" );
-//        }
-//        entryListActivity = new Runnable()
-//        {
-//            public void run()
-//            {
-//                while ( true )
-//                {
-//                    try
-//                    {
-//                        Thread.sleep( 180000 );
-//                    }
-//                    catch ( InterruptedException e )
-//                    {
-//                        // Do nothing
-//                    }
-//                    m_adapter.notifyDataSetChanged();
-//                    if (DEBUG) {
-//                        Log.d(CLASS, "Data changed notification sent.");
-//                    }
-//                }
-//            }
-//        };
-//        if ( DEBUG )
-//        {
-//            Log.d( CLASS, "create new thread with viewTestRunable" );
-//        }
-//        Thread thread = new Thread( null, entryListActivity, "UpdateData" );
-//
-//        if ( DEBUG )
-//        {
-//            Log.d( CLASS, "thread start()" );
-//        }
-//        thread.start();
-
     }
-
-//    private Runnable returnRes = new Runnable()
-//    {
-//        public void run()
-//        {
-//            if ( DEBUG )
-//            {
-//                Log.d( CLASS, "returnRes runable run() start" );
-//            }
-//            if ( m_options != null && m_options.size() > 0 )
-//            {
-//                if ( DEBUG )
-//                {
-//                    Log.d( CLASS, "m_tests got something" );
-//                }
-//                m_adapter.notifyDataSetChanged();
-//                if ( DEBUG )
-//                {
-//                    Log.d( CLASS, "m_adapter.notifydatasetchanged() since m_tests got something" );
-//                }
-//                for ( int i = 0; i < m_options.size(); i++ )
-//                {
-//                    m_adapter.add( m_options.get( i ) );
-//                }
-//            }
-//            m_adapter.notifyDataSetChanged();
-//            if ( DEBUG )
-//            {
-//                Log.d( CLASS, "m_adapter.notifydatasetchanged() after dismiss m_progressdialog" );
-//            }
-//        }
-//    };
-
 
     @Override
     protected void onActivityResult( int requestCode, int resultCode, Intent intent )
@@ -165,7 +89,7 @@ public class EntryListActivity
                 if (message.contains( "authentication" )) {
                     toastMessage = "Login error!";
                 } else {
-                    toastMessage = "Communication error!";
+                    toastMessage = "Communication error! - " + e.getMessage();
                 }
                 Toast.makeText( getListView().getContext(), toastMessage, Toast.LENGTH_LONG ).show();
             }
@@ -184,7 +108,7 @@ public class EntryListActivity
     public void refreshDataFromServer() throws ParseException, JDOMException, IOException {
 
         if (getUsername() != null && getUsername().length() > 0 && getPassword() != null && getPassword().length() > 0) {
-            URL twitranettMessagesURL = new URL(serverUrl + "twitranettmessages?count=" + getMessageCount());
+            URL twitranettMessagesURL = new URL(getServerUrl() + "twitranettmessages?count=" + getMessageCount());
             HttpURLConnection connection = (HttpURLConnection) twitranettMessagesURL.openConnection();
             connection.setRequestMethod("POST");
 
@@ -259,5 +183,10 @@ public class EntryListActivity
         } catch (NumberFormatException e) {
             return 0;
         }
+    }
+
+    public String getServerUrl() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        return prefs.getString("server_url", "0");
     }
 }
