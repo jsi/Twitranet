@@ -66,42 +66,45 @@ public class EntryListActivity
     @Override
     protected void onActivityResult( int requestCode, int resultCode, Intent intent )
     {
-        if (requestCode == ACTIVITY_LOGIN) {
-
-            boolean loginFailed = true;
-
+        if (requestCode == ACTIVITY_LOGIN)
+        {
             super.onActivityResult( requestCode, resultCode, intent );
 
-            try
-            {
-                refreshDataFromServer();
-                this.m_adapter.notifyDataSetChanged();
-                loginFailed = false;
-            }
-            catch ( ParseException e )
-            {
-                e.printStackTrace();
-            }
-            catch ( IOException e )
-            {
-                String message = e.getMessage();
-                String toastMessage;
-                if (message.contains( "authentication" )) {
-                    toastMessage = "Login error!";
-                } else {
-                    toastMessage = "Communication error! - " + e.getMessage();
-                }
-                Toast.makeText( getListView().getContext(), toastMessage, Toast.LENGTH_LONG ).show();
-            }
-            catch ( JDOMException e )
-            {
-                e.printStackTrace();
-            }
+            refreshView();
+        }
+    }
 
-            if (loginFailed) {
-                Intent i = new Intent( this, LoginActivity.class );
-                startActivityForResult( i, ACTIVITY_LOGIN );
+    private void refreshView() {
+        boolean loginFailed = true;
+        try
+        {
+            refreshDataFromServer();
+            this.m_adapter.notifyDataSetChanged();
+            loginFailed = false;
+        }
+        catch ( ParseException e )
+        {
+            e.printStackTrace();
+        }
+        catch ( IOException e )
+        {
+            String message = e.getMessage();
+            String toastMessage;
+            if (message.contains( "authentication" )) {
+                toastMessage = "Login error!";
+            } else {
+                toastMessage = "Communication error! - " + e.getMessage();
             }
+            Toast.makeText(getListView().getContext(), toastMessage, Toast.LENGTH_LONG).show();
+        }
+        catch ( JDOMException e )
+        {
+            e.printStackTrace();
+        }
+
+        if (loginFailed) {
+            Intent i = new Intent( this, LoginActivity.class );
+            startActivityForResult( i, ACTIVITY_LOGIN );
         }
     }
 
